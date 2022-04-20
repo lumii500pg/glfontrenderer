@@ -1,0 +1,20 @@
+# other
+*.log
+*.DS_Store
+cmake-build-*
+
+# BlueJ files
+*.ctxt
+
+# IntelliJ
+/.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+.settings/
+.vscode/
+/bin/
+.classpath
+.project
