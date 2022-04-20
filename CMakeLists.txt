@@ -20,5 +20,5 @@ file(GLOB_RECURSE GLFONTRENDERER_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.c**)
 file(GLOB_RECURSE GLFONTRENDERER_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/*.h**)
 
 #add_library(GLFontRenderer SHARED ${GLFONTRENDERER_SOURCE_FILES} ${GLFONTRENDERER_HEADER_FILES})
-add_executable(GLFontRenderer ${GLFONTRENDERER_SOURCE_FILES} ${GLFONTRENDERER_HEADER_FILES} src/main.cpp src/logger.cpp src/logger.h src/ttfloader.cpp src/ttfloader.h src/fileutils.cpp src/fileutils.h src/bitmap.cpp src/bitmap.h src/timeutils.h src/font.h)
+add_executable(GLFontRenderer ${GLFONTRENDERER_SOURCE_FILES} ${GLFONTRENDERER_HEADER_FILES} src/main.cpp src/logger.cpp src/logger.h src/ttfloader.cpp src/ttfloader.h src/fileutils.cpp src/fileutils.h src/bitmap.cpp src/bitmap.h src/timeutils.h src/font.h src/render/bufferbuilder.cpp src/render/bufferbuilder.h src/render/fontmeshbuilder.h)
 target_link_libraries(GLFontRenderer ${GLFONTRENDERER_LIBRARIES} opengl32.lib)

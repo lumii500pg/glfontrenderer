@@ -1,11 +1,16 @@
 #pragma once
 
-#include "bitmap.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-class [[maybe_unused]] glfr::ttfloader {
-public:
-    static bitmap load_to_bitmap(const char *name, size_t font_height);
-    static bitmap load_to_bitmap(const void *ptr, size_t byteLength, size_t font_height);
-};
+namespace glfr {
+    class font;
+
+    class [[maybe_unused]] ttfloader {
+    public:
+        // @formatter:off
+        static font *load_font(const char *name, size_t font_height);
+        static font *load_font(const void *ptr, size_t byteLength, size_t font_height);
+        // @formatter:on
+    };
+}

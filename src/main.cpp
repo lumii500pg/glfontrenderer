@@ -17,6 +17,8 @@ void update(SDL_Window *window) {
 }
 
 int main(int num_arguments, char **arguments) {
+    using namespace glfr;
+
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE); //OpenGL core profile
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3); //OpenGL 3.3
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); //OpenGL 4
@@ -62,7 +64,7 @@ int main(int num_arguments, char **arguments) {
         return 1;
     }
 
-    const FT_Face fontFace = ttfloader::load_ttf_from_file("calibri.ttf", 32);
+    auto *font = ttfloader::load_font("calibri.ttf", 32);
 
     bool running = true;
     SDL_Event ev;

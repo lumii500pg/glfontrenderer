@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace file_utils {
+namespace glfr::file_utils {
     std::vector<int8_t> read_bytes(const std::string_view &path) {
         auto *file = fopen(path.data(), "rb");
         if (!file) {
