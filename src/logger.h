@@ -1,7 +1,8 @@
 #pragma once
 
-#include <format>
+#include <fmt/format.h>
 #include <string>
+#include <string_view>
 
 namespace glfr {
     enum class Level {
@@ -16,18 +17,18 @@ namespace glfr {
 
     public:
         template<typename... Args>
-        static void info(const std::string_view &fmt, Args &&... args) {
-            log_internal(std::format(fmt, std::forward<Args>(args)...), Level::INFO);
+        static void info(const fmt::format_string<Args...> &fmt, Args &&... args) {
+            log_internal(fmt::format(fmt, std::forward<Args>(args)...), Level::INFO);
         }
 
         template<typename... Args>
-        static void warn(const std::string_view &fmt, Args &&... args) {
-            log_internal(std::format(fmt, std::forward<Args>(args)...), Level::WARNING);
+        static void warn(const fmt::format_string<Args...> &fmt, Args &&... args) {
+            log_internal(fmt::format(fmt, std::forward<Args>(args)...), Level::WARNING);
         }
 
         template<typename... Args>
-        static void error(const std::string_view &fmt, Args &&... args) {
-            log_internal(std::format(fmt, std::forward<Args>(args)...), Level::ERROR);
+        static void error(const fmt::format_string<Args...> &fmt, Args &&... args) {
+            log_internal(fmt::format(fmt, std::forward<Args>(args)...), Level::ERROR);
         }
     };
 

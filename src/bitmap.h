@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include <cstdint>
-#include <format>
+#include <fmt/format.h>
 #include <stdexcept>
 
 namespace glfr {
@@ -17,7 +17,7 @@ namespace glfr {
                 : _width(width), _height(height) {
             _surface = SDL_CreateRGBSurface(0, width, height, 32, 0xFF000000, 0xFF0000, 0xFF00, 0xFF);
             if (!_surface) {
-                throw std::runtime_error(std::format("SDL_CreateRGBSurface failed: {}", SDL_GetError()));
+                throw std::runtime_error(fmt::format("SDL_CreateRGBSurface failed: {}", SDL_GetError()));
             }
         }
 
