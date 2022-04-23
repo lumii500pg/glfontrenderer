@@ -2,10 +2,12 @@
 
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
-#include <format>
 
 #include "logger.h"
 #include "ttfloader.h"
+
+#include "render/gl_shader.h"
+#include "render/gl_buffer.h"
 
 // rgba
 const float CLEAR_COLOR[4] = {.0, .0, .0, .0};
@@ -13,6 +15,11 @@ const float CLEAR_COLOR[4] = {.0, .0, .0, .0};
 void update(SDL_Window *window, glfr::gl_shader& shader, glfr::gl_buffer& buffer) {
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(CLEAR_COLOR[0], CLEAR_COLOR[1], CLEAR_COLOR[2], CLEAR_COLOR[3]);
+
+    shader.bind();
+    buffer.draw();
+    shader.unbind();
+
     SDL_GL_SwapWindow(window);
 }
 
@@ -32,9 +39,9 @@ int main(int num_arguments, char **arguments) {
         logger::warn("SDL_GetCurrentDisplayMode: {}", SDL_GetError());
     }
 
-    logger::info(std::string("Found display:"));
-    logger::info(std::string("  -> width: " + std::to_string(displayMode.w)));
-    logger::info(std::string("  -> height: " + std::to_string(displayMode.h)));
+    logger::info("Found display:");
+    logger::info("  -> width: {}", displayMode.w);
+    logger::info("  -> height: {}", displayMode.h);
 
     SDL_Window *window = SDL_CreateWindow("GLFontRenderer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                           displayMode.w / 2, displayMode.h / 2, SDL_WINDOW_OPENGL);
@@ -49,22 +56,22 @@ int main(int num_arguments, char **arguments) {
     }
 
     logger::info("Created window:");
-    logger::info(std::string("  -> width: ") + std::to_string(displayMode.w / 2));
-    logger::info(std::string("  -> height: ") + std::to_string(displayMode.h / 2));
+    logger::info("  -> width: {}", displayMode.w / 2);
+    logger::info("  -> height: {}", displayMode.h / 2);
 
     if (!window) {
-        logger::info(std::string("SDL_CreateWindow failed: ") + SDL_GetError());
+        logger::info("SDL_CreateWindow failed: {}", SDL_GetError());
         return 1;
     }
 
     GLenum result = glewInit();
     if (result != GLEW_OK) {
-        logger::info(std::string("glewInit failed: ") + (const char *) glewGetErrorString(result));
-        logger::info(std::string("result: ") + std::to_string(result));
+        logger::info("glewInit failed: {}", (const char *) glewGetErrorString(result));
+        logger::info("result: {}", result);
         return 1;
     }
 
-    auto *font = ttfloader::load_font("calibri.ttf", 32);
+    auto *font = ttfloader::load_font("comfortaa-regular.ttf", 32);
 
     bool running = true;
     SDL_Event ev;

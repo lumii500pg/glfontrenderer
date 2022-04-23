@@ -31,5 +31,4 @@ namespace glfr {
             log_internal(fmt::format(fmt, std::forward<Args>(args)...), Level::ERROR);
         }
     };
-
 }

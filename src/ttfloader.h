@@ -3,6 +3,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include <cstring>
+
 namespace glfr {
     class font;
 

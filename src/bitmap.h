@@ -25,7 +25,7 @@ namespace glfr {
             SDL_FreeSurface(_surface);
         }
 
-        void save_to_file(const std::string_view& path) {
+        void save_to_file(const std::string_view &path) {
             SDL_SaveBMP(_surface, path.data());
         }
 
