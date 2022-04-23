@@ -37,7 +37,8 @@ static const char *_FRAGMENT_SOURCE = R"(#version 330
     out vec4 outColor;
 
     void main(void) {
-        outColor = colorFS * texture(fontTexture, texCoordFS);
+        outColor = vec4(1.0);
+        //outColor = colorFS * texture(fontTexture, texCoordFS);
     })";
 
 namespace glfr {

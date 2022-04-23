@@ -25,10 +25,6 @@ void update(SDL_Window *window, glfr::gl_shader& shader, glfr::gl_buffer& buffer
 
 int main(int num_arguments, char **arguments) {
     using namespace glfr;
-
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE); //OpenGL core profile
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3); //OpenGL 3.3
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); //OpenGL 4
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         return 1;
     }
@@ -45,6 +41,10 @@ int main(int num_arguments, char **arguments) {
 
     SDL_Window *window = SDL_CreateWindow("GLFontRenderer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                           displayMode.w / 2, displayMode.h / 2, SDL_WINDOW_OPENGL);
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE); //OpenGL core profile
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5); //OpenGL 5
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); //OpenGL 4
 
     SDL_GLContext gl_context = SDL_GL_CreateContext(window);
 
@@ -80,7 +80,7 @@ int main(int num_arguments, char **arguments) {
             { -0.5, 0.5, 0.0, 0.0, 0.0, 0xFFFF0000 },
             { -0.5, -0.5, 0.0, 0.0, 1.0, 0xFF00FF00 },
             { 0.5, -0.5, 0.0, 1.0, 1.0, 0xFF0000FF },
-            { 0.0, 0.0, 0.0, 1.0, 0.0, 0xFFFFFF00 }
+            { 0.5, 0.5, 0.0, 1.0, 0.0, 0xFFFFFF00 }
     };
 
     uint32_t indices[] = {
