@@ -1,6 +1,5 @@
 #include "gl_shader.h"
 #include "../logger.h"
-#include <string>
 
 #include <stdexcept>
 
@@ -66,9 +65,7 @@ namespace glfr {
         return shader;
     }
 
-    [[maybe_unused]] gl_shader::gl_shader() : gl_shader(_VERTEX_SOURCE, _FRAGMENT_SOURCE) {
-
-    }
+    [[maybe_unused]] gl_shader::gl_shader() : gl_shader(_VERTEX_SOURCE, _FRAGMENT_SOURCE) {}
 
     [[maybe_unused]] gl_shader::gl_shader(const std::string_view &vertex_source,
                                           const std::string_view &fragment_source) {
