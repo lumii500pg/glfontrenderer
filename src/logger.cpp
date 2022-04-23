@@ -1,9 +1,6 @@
 #include "logger.h"
 #include <iostream>
 
-#include <fmt/os.cc>
-#include <fmt/format.cc>
-
 namespace glfr {
     const char *prefix = "Logger >> ";
 

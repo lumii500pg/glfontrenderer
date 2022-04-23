@@ -20,7 +20,7 @@
 #define FTMM_H_
 
 
-#include "t1tables.h"
+#include <freetype/t1tables.h>
 
 
 FT_BEGIN_HEADER

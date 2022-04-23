@@ -8,7 +8,7 @@
  */
 namespace glfr {
     template<typename D>
-    requires(std::chrono::__is_duration<D>::value)
+    //requires(std::chrono::is_duration<D>::value)
     static inline std::uint64_t current_time() noexcept {
         const auto time = std::chrono::high_resolution_clock::now().time_since_epoch();
         const auto milli_time = std::chrono::duration_cast<D>(time);

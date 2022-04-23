@@ -71,7 +71,7 @@ int main(int num_arguments, char **arguments) {
         return 1;
     }
 
-    auto *font = ttfloader::load_font("comfortaa-regular.ttf", 32);
+    auto *font = ttfloader::load_font("calibri.ttf", 32);
 
     bool running = true;
     SDL_Event ev;

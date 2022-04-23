@@ -20,8 +20,8 @@
 #define FTLOGGING_H_
 
 
-#include "../ft2build.h"
-#include FT_CONFIG_CONFIG_H"config/ftconfig.h"
+#include <ft2build.h>
+#include FT_CONFIG_CONFIG_H
 
 
 FT_BEGIN_HEADER

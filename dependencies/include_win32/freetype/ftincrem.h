@@ -19,8 +19,8 @@
 #ifndef FTINCREM_H_
 #define FTINCREM_H_
 
-#include "freetype.h"
-#include "ftparams.h"
+#include <freetype/freetype.h>
+#include <freetype/ftparams.h>
 
 #ifdef FREETYPE_H
 #error "freetype.h of FreeType 1 has been loaded!"

@@ -61,10 +61,10 @@ namespace glfr {
     }
 
     font* ttfloader::load_font(const void *ptr, size_t num_bytes, size_t font_height) {
-        uint64_t millis = glfr::current_time<std::chrono::milliseconds>();
-        uint64_t nanos = glfr::current_time<std::chrono::nanoseconds>();
-        uint32_t millisAll = glfr::current_time<std::chrono::milliseconds>();
-        uint32_t nanosAll = glfr::current_time<std::chrono::nanoseconds>();
+        uint64_t millis = current_time<std::chrono::milliseconds>();
+        uint64_t nanos = current_time<std::chrono::nanoseconds>();
+        uint32_t millisAll = current_time<std::chrono::milliseconds>();
+        uint32_t nanosAll = current_time<std::chrono::nanoseconds>();
         FT_Face face;
         FT_Error error;
 
@@ -77,10 +77,10 @@ namespace glfr {
             }
         }
 
-        logger::info("initialized FreeType in {}ms or {}ns", glfr::current_time<std::chrono::milliseconds>() - millis,
-                     (glfr::current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
-        millis = glfr::current_time<std::chrono::milliseconds>();
-        nanos = glfr::current_time<std::chrono::nanoseconds>();
+        logger::info("initialized FreeType in {}ms or {}ns", current_time<std::chrono::milliseconds>() - millis,
+                     (current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
+        millis = current_time<std::chrono::milliseconds>();
+        nanos = current_time<std::chrono::nanoseconds>();
 
         error = FT_New_Memory_Face(library, (const FT_Byte *) ptr,
                                    (FT_Long) num_bytes, 0, &face);
@@ -88,30 +88,30 @@ namespace glfr {
             handleFTError(error);
             return nullptr;
         }
-        logger::info("created new memory face in {}ms or {}ns", glfr::current_time<std::chrono::milliseconds>() - millis,
-                     (glfr::current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
-        millis = glfr::current_time<std::chrono::milliseconds>();
-        nanos = glfr::current_time<std::chrono::nanoseconds>();
+        logger::info("created new memory face in {}ms or {}ns", current_time<std::chrono::milliseconds>() - millis,
+                     (current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
+        millis = current_time<std::chrono::milliseconds>();
+        nanos = current_time<std::chrono::nanoseconds>();
 
         error = FT_Select_Charmap(face, FT_ENCODING_UNICODE);
         if (error) {
             handleFTError(error);
             return nullptr;
         }
-        logger::info("selected char map in {}ms or {}ns", glfr::current_time<std::chrono::milliseconds>() - millis,
-                     (glfr::current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
-        millis = glfr::current_time<std::chrono::milliseconds>();
-        nanos = glfr::current_time<std::chrono::nanoseconds>();
+        logger::info("selected char map in {}ms or {}ns", current_time<std::chrono::milliseconds>() - millis,
+                     (current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
+        millis = current_time<std::chrono::milliseconds>();
+        nanos = current_time<std::chrono::nanoseconds>();
 
         error = FT_Set_Pixel_Sizes(face, 0, font_height);
         if (error) {
             handleFTError(error);
             return nullptr;
         }
-        logger::info("set pixel sizes in {}ms or {}ns", glfr::current_time<std::chrono::milliseconds>() - millis,
-                     (glfr::current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
-        millis = glfr::current_time<std::chrono::milliseconds>();
-        nanos = glfr::current_time<std::chrono::nanoseconds>();
+        logger::info("set pixel sizes in {}ms or {}ns", current_time<std::chrono::milliseconds>() - millis,
+                     (current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
+        millis = current_time<std::chrono::milliseconds>();
+        nanos = current_time<std::chrono::nanoseconds>();
 
         const size_t preferred_width = font_height * 32;
         uint32_t current_atlas_width = 0;
@@ -128,18 +128,18 @@ namespace glfr {
             logger::error("an error occurred loading TTF: first glyph is invalid");
             return nullptr;
         }
-        logger::info("got first char in {}ms or {}ns", glfr::current_time<std::chrono::milliseconds>() - millis,
-                     (glfr::current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
-        millis = glfr::current_time<std::chrono::milliseconds>();
-        nanos = glfr::current_time<std::chrono::nanoseconds>();
+        logger::info("got first char in {}ms or {}ns", current_time<std::chrono::milliseconds>() - millis,
+                     (current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
+        millis = current_time<std::chrono::milliseconds>();
+        nanos = current_time<std::chrono::nanoseconds>();
 
         calcGlyphSize(face, char_code, preferred_width, current_atlas_width, max_atlas_width, glyph_height,
                       temp_y_offset, temp_y_height, y_data);
         char_codes.push_back(char_code);
-        logger::info("calculated first char size in {}ms or {}ns", glfr::current_time<std::chrono::milliseconds>() - millis,
-                     (glfr::current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
-        millis = glfr::current_time<std::chrono::milliseconds>();
-        nanos = glfr::current_time<std::chrono::nanoseconds>();
+        logger::info("calculated first char size in {}ms or {}ns", current_time<std::chrono::milliseconds>() - millis,
+                     (current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
+        millis = current_time<std::chrono::milliseconds>();
+        nanos = current_time<std::chrono::nanoseconds>();
 
         while (glyph_index != 0) {
             char_code = FT_Get_Next_Char(face, char_code, &glyph_index);
@@ -149,11 +149,11 @@ namespace glfr {
         }
         y_data.emplace_back(temp_y_height, temp_y_offset);
 
-        logger::info("got and calculated other chars in {}ms or {}ns", glfr::current_time<std::chrono::milliseconds>()
+        logger::info("got and calculated other chars in {}ms or {}ns", current_time<std::chrono::milliseconds>()
                                                                        - millis,
-                     (glfr::current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
-        millis = glfr::current_time<std::chrono::milliseconds>();
-        nanos = glfr::current_time<std::chrono::nanoseconds>();
+                     (current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
+        millis = current_time<std::chrono::milliseconds>();
+        nanos = current_time<std::chrono::nanoseconds>();
 
         const auto height = std::get<0>(y_data.back()) + std::get<1>(y_data.back());
         bitmap my_bitmap(max_atlas_width, height);
@@ -191,10 +191,10 @@ namespace glfr {
                 ++y_index;
             }
         }
-        logger::info("filled bitmap in {}ms or {}ns", glfr::current_time<std::chrono::milliseconds>() - millis,
-                     (glfr::current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
-        logger::info("Total time: {}ms or {}ns", glfr::current_time<std::chrono::milliseconds>() - millisAll,
-                     (glfr::current_time<std::chrono::nanoseconds>() - nanosAll) * 1000000.);
+        logger::info("filled bitmap in {}ms or {}ns", current_time<std::chrono::milliseconds>() - millis,
+                     (current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
+        logger::info("Total time: {}ms or {}ns", current_time<std::chrono::milliseconds>() - millisAll,
+                     (current_time<std::chrono::nanoseconds>() - nanosAll) * 1000000.);
 
         my_bitmap.save_to_file("test.bmp");
         return nullptr;

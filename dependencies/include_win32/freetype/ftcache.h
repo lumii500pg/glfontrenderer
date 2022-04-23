@@ -20,7 +20,7 @@
 #define FTCACHE_H_
 
 
-#include "ftglyph.h"
+#include <freetype/ftglyph.h>
 
 
 FT_BEGIN_HEADER

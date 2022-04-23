@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gl_object.h"
+#include <cstdint>
 
 namespace glfr {
     struct vertex {
