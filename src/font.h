@@ -1,22 +1,16 @@
 #pragma once
 
-#include "bitmap.h"
-
+#include "render/gl_texture_2d.h"
 #include <cstdint>
 #include <unordered_map>
-#include <GL/glew.h>
 
 namespace glfr {
     struct glyph_info final {
         uint64_t value;
-        float x_advance;
-        float y_advance;
-        float width;
-        float height;
-        float offset_x;
-        float offset_y;
-        float tex_coord_x;
-        float tex_coord_y;
+        float x_advance, y_advance;
+        float width, height;
+        float offset_x, offset_y;
+        float tex_coord_x, tex_coord_y;
 
         glyph_info() = default;
 
@@ -27,16 +21,18 @@ namespace glfr {
     };
 
     class font final {
-        GLuint _glTextureId;
-        const char *_name;
-        bitmap _my_bitmap;
-
+        gl_texture_2d _texture;
         std::unordered_map<uint64_t, glyph_info> _glyph_map;
 
-        font(const char *name, bitmap my_bitmap, std::unordered_map<uint64_t, glyph_info> glyph_map)
-                : _name(name), _my_bitmap(my_bitmap) {}
+    public:
+        font(const bitmap& my_bitmap, std::unordered_map<uint64_t, glyph_info> glyph_map);
 
-        void draw(const char *input, const uint_fast16_t color) {
+        [[nodiscard]] inline gl_texture_2d& get_texture() noexcept {
+            return _texture;
+        }
+
+        [[nodiscard]] inline const gl_texture_2d& get_texture() const noexcept {
+            return _texture;
         }
     };
 }

@@ -18,6 +18,7 @@ static const char *_VERTEX_SOURCE = R"(#version 330
 
     void main() {
         gl_Position = vec4(position, 1.);
+        texCoordFS = texCoord;
         colorFS = vec4(1.0);
         //colorFS = (vec4(float(((color >> 16) & 0xff)), float((color >> 8) & 0xff), float((color & 0xff)), float(((color >> 24) & 0xff))) / vec4(255.));
     })";
@@ -36,8 +37,7 @@ static const char *_FRAGMENT_SOURCE = R"(#version 330
     out vec4 outColor;
 
     void main(void) {
-        outColor = vec4(1.0);
-        //outColor = colorFS * texture(fontTexture, texCoordFS);
+        outColor = colorFS * texture(fontTexture, texCoordFS);
     })";
 
 namespace glfr {
@@ -94,6 +94,8 @@ namespace glfr {
         glDeleteShader(vertex_shader);
         glDeleteShader(fragment_shader);
     }
+
+    gl_shader::~gl_shader() { glDeleteProgram(_id); }
 
     [[maybe_unused]] void gl_shader::bind() noexcept {
         glUseProgram(_id);

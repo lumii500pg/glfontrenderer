@@ -5,6 +5,7 @@
 
 #include "logger.h"
 #include "ttfloader.h"
+#include "font.h"
 
 #include "render/gl_shader.h"
 #include "render/gl_buffer.h"
@@ -12,13 +13,21 @@
 // rgba
 const float CLEAR_COLOR[4] = {.0, .0, .0, .0};
 
-void update(SDL_Window *window, glfr::gl_shader& shader, glfr::gl_buffer& buffer) {
+void update(SDL_Window *window, glfr::gl_shader& shader, glfr::gl_buffer& buffer, glfr::font& my_font) {
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(CLEAR_COLOR[0], CLEAR_COLOR[1], CLEAR_COLOR[2], CLEAR_COLOR[3]);
 
+    glEnable(GL_TEXTURE_2D);
+
     shader.bind();
+    my_font.get_texture().bind(0);
+
     buffer.draw();
+
+    my_font.get_texture().unbind(0);
     shader.unbind();
+
+    glDisable(GL_TEXTURE_2D);
 
     SDL_GL_SwapWindow(window);
 }
@@ -71,16 +80,14 @@ int main(int num_arguments, char **arguments) {
         return 1;
     }
 
-    auto *font = ttfloader::load_font("calibri.ttf", 32);
-
     bool running = true;
     SDL_Event ev;
 
     const vertex vertices[] = {
-            { -0.5, 0.5, 0.0, 0.0, 0.0, 0xFFFF0000 },
-            { -0.5, -0.5, 0.0, 0.0, 1.0, 0xFF00FF00 },
-            { 0.5, -0.5, 0.0, 1.0, 1.0, 0xFF0000FF },
-            { 0.5, 0.5, 0.0, 1.0, 0.0, 0xFFFFFF00 }
+            { -1.0, 1.0, 0.0, 0.0, 1.0, 0xFFFF0000 },
+            { -1.0, -1.0, 0.0, 0.0, 0.0, 0xFF00FF00 },
+            { 1.0, -1.0, 0.0, 1.0, 0.0, 0xFF0000FF },
+            { 1.0, 1.0, 0.0, 1.0, 1.0, 0xFFFFFF00 }
     };
 
     uint32_t indices[] = {
@@ -89,13 +96,16 @@ int main(int num_arguments, char **arguments) {
 
     gl_shader _test_shader;
     gl_buffer _test_buffer(vertices, 4, indices, 6);
+    auto *font = ttfloader::load_font("calibri.ttf", 512);
 
     while (running) {
         while (SDL_PollEvent(&ev)) {
             if (ev.type == SDL_QUIT) running = false;
         }
-        update(window, _test_shader, _test_buffer);
+        update(window, _test_shader, _test_buffer, *font);
     }
+
+    delete font;
 
     SDL_GL_DeleteContext(gl_context);
     SDL_DestroyWindow(window);

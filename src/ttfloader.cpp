@@ -5,6 +5,7 @@
 #include "timeutils.h"
 
 #include "bitmap.h"
+#include "font.h"
 #include <tuple>
 
 namespace glfr {
@@ -197,6 +198,8 @@ namespace glfr {
                      (current_time<std::chrono::nanoseconds>() - nanosAll) * 1000000.);
 
         my_bitmap.save_to_file("test.bmp");
-        return nullptr;
+
+        auto* my_font = new font(my_bitmap, {});
+        return my_font;
     }
 }

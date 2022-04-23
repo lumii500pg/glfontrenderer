@@ -8,7 +8,7 @@
 namespace glfr {
     class bitmap final {
     private:
-        SDL_Surface *_surface;
+        SDL_Surface* _surface;
         uint32_t _width;
         uint32_t _height;
 
@@ -25,12 +25,12 @@ namespace glfr {
             SDL_FreeSurface(_surface);
         }
 
-        void save_to_file(const std::string_view &path) {
+        void save_to_file(const std::string_view& path) {
             SDL_SaveBMP(_surface, path.data());
         }
 
-        [[nodiscard]] inline uint32_t &get(uint32_t x, uint32_t y) noexcept {
-            auto *buffer = (uint32_t *) _surface->pixels;
+        [[nodiscard]] inline uint32_t& get(uint32_t x, uint32_t y) noexcept {
+            auto* buffer = (uint32_t*) _surface->pixels;
             return buffer[y * _width + x];
         }
 
@@ -40,6 +40,10 @@ namespace glfr {
 
         [[nodiscard]] inline uint32_t get_height() const noexcept {
             return _height;
+        }
+
+        [[nodiscard]] inline const void* get_data() const noexcept {
+            return _surface->pixels;
         }
     };
 }
