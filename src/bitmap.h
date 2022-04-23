@@ -15,7 +15,7 @@ namespace glfr {
     public:
         bitmap(uint32_t width, uint32_t height)
                 : _width(width), _height(height) {
-            _surface = SDL_CreateRGBSurface(0, width, height, 32, 0xFF000000, 0xFF0000, 0xFF00, 0xFF);
+            _surface = SDL_CreateRGBSurface(0, static_cast<int32_t>(width), static_cast<int32_t>(height), 32, 0xFF000000, 0xFF0000, 0xFF00, 0xFF);
             if (!_surface) {
                 throw std::runtime_error(fmt::format("SDL_CreateRGBSurface failed: {}", SDL_GetError()));
             }

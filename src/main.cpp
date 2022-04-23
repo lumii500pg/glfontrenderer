@@ -10,7 +10,7 @@
 // rgba
 const float CLEAR_COLOR[4] = {.0, .0, .0, .0};
 
-void update(SDL_Window *window) {
+void update(SDL_Window *window, glfr::gl_shader& shader, glfr::gl_buffer& buffer) {
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(CLEAR_COLOR[0], CLEAR_COLOR[1], CLEAR_COLOR[2], CLEAR_COLOR[3]);
     SDL_GL_SwapWindow(window);
@@ -69,11 +69,25 @@ int main(int num_arguments, char **arguments) {
     bool running = true;
     SDL_Event ev;
 
+    const vertex vertices[] = {
+            { -0.5, 0.5, 0.0, 0.0, 0.0, 0xFFFF0000 },
+            { -0.5, -0.5, 0.0, 0.0, 1.0, 0xFF00FF00 },
+            { 0.5, -0.5, 0.0, 1.0, 1.0, 0xFF0000FF },
+            { 0.0, 0.0, 0.0, 1.0, 0.0, 0xFFFFFF00 }
+    };
+
+    uint32_t indices[] = {
+            0, 1, 3, 3, 1, 2
+    };
+
+    gl_shader _test_shader;
+    gl_buffer _test_buffer(vertices, 4, indices, 6);
+
     while (running) {
         while (SDL_PollEvent(&ev)) {
             if (ev.type == SDL_QUIT) running = false;
         }
-        update(window);
+        update(window, _test_shader, _test_buffer);
     }
 
     SDL_GL_DeleteContext(gl_context);
