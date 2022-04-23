@@ -29,7 +29,7 @@ int main(int num_arguments, char **arguments) {
     SDL_DisplayMode displayMode;
 
     if (SDL_GetCurrentDisplayMode(0, &displayMode) != 0) {
-        logger::warn(std::string("SDL_GetCurrentDisplayMode failed: ") + SDL_GetError());
+        logger::warn("SDL_GetCurrentDisplayMode: {}", SDL_GetError());
     }
 
     logger::info(std::string("Found display:"));
@@ -42,9 +42,9 @@ int main(int num_arguments, char **arguments) {
     SDL_GLContext gl_context = SDL_GL_CreateContext(window);
 
     if (gl_context == nullptr) {
-        logger::info(std::string("couldn't create gl-context: ") + SDL_GetError());
-        logger::info(std::string("  -> gl_minor: ") + std::to_string(SDL_GL_CONTEXT_MINOR_VERSION));
-        logger::info(std::string("  -> gl_major: ") + std::to_string(SDL_GL_CONTEXT_MAJOR_VERSION));
+        logger::info("couldn't create gl-context: {}", SDL_GetError());
+        logger::info("  -> gl_minor: {}", SDL_GL_CONTEXT_MINOR_VERSION);
+        logger::info("  -> gl_major: {}", SDL_GL_CONTEXT_MAJOR_VERSION);
         return 1;
     }
 

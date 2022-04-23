@@ -17,7 +17,7 @@ namespace glfr {
     }
 
     void handleFTError(const FT_Error error) {
-        logger::error(std::string("an error occurred loading TTF: ") + std::to_string(error));
+        logger::error("an error occurred loading TTF: {}", error);
     }
 
     void calcGlyphSize(FT_Face face, const FT_ULong &character, uint32_t preferred_width,
@@ -26,14 +26,13 @@ namespace glfr {
                        std::vector<std::pair<uint32_t, uint32_t>> &y_data) {
         FT_Error error = FT_Load_Char(face, character, FT_LOAD_DEFAULT);
         if (error) {
-            logger::warn(std::string("skipped char '") + std::to_string(character)
-                         + "' because of an error: " + std::to_string(error));
+            logger::warn("skipped char '{}' because of an error: {}", character, error);
             return;
         }
 
         error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
         if (error) {
-            logger::warn(std::string(std::string("couldn't render glyph: ") + std::to_string(error)));
+            logger::warn("couldn't render glyph: {}", error);
             return;
         }
 
