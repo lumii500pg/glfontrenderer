@@ -36,8 +36,10 @@ namespace glfr {
         bool first_glyph_of_line = true;
 
         Utf8Iterator iterator(message.data());
+        int i = 0;
         while (iterator.has_chars()) {
             const auto current = *iterator;
+            ++iterator;
 
             if (current == '\r') continue;
             if (current == '\n') {
@@ -82,16 +84,14 @@ namespace glfr {
             vertex vertex_tr;
             vertex_tr.x = vertex_tl.x + glyph->width;
             vertex_tr.y = vertex_tl.y;
-            vertex_tr.u = glyph->tex_coord_x / font_tex_w;
-            vertex_tr.v = (glyph->tex_coord_y + glyph->height) / font_tex_h;
+            vertex_tr.u = (glyph->tex_coord_x + glyph->width) / font_tex_w;
+            vertex_tr.v = glyph->tex_coord_y / font_tex_h;
             vertex_tr.color = color;
 
             add_quad(vertex_tl, vertex_br, vertex_tr, vertex_bl);
 
             offset_x += glyph->x_advance;
             offset_y += glyph->y_advance;
-
-            ++iterator;
         }
     }
 
@@ -99,6 +99,8 @@ namespace glfr {
         gl_buffer buffer(_vertices.data(), _vertices.size(), _indices.data(), _indices.size());
 
         shader.bind();
+        shader.uniform_2f("resolution", 1600, 900); //TODO:
+
         _my_font.get_texture().bind(0);
 
         buffer.draw();

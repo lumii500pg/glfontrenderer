@@ -184,7 +184,7 @@ namespace glfr {
             for (auto y = 0; y < glyph_height; y++) {
                 for (auto x = 0; x < glyph_width; x++) {
                     const auto value = face->glyph->bitmap.buffer[y * glyph_width + x];
-                    my_bitmap.get(offset_x + x, offset_y + y) = (value << 24) | (value << 16) | (value << 8) | value;
+                    my_bitmap.get(offset_x + x, offset_y + y) = (value << 24) | 0xFFFFFF;
                 }
             }
 

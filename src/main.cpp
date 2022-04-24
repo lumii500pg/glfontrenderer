@@ -18,10 +18,15 @@ void update(SDL_Window *window, glfr::gl_shader &shader, glfr::font &my_font) {
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(CLEAR_COLOR[0], CLEAR_COLOR[1], CLEAR_COLOR[2], CLEAR_COLOR[3]);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glfr::font_mesh_builder mb(my_font);
     mb.begin();
-    mb.push(10.0f, 10.0f, "ICHBINIRGENDEINRANDOMTEXT", 0xFFFFFFFF);
+    mb.push(10.0f, 10.0f, "Ich\nbin\ncool", 0xFFFFFFFF);
     mb.end(shader);
+
+    glDisable(GL_BLEND);
 
     SDL_GL_SwapWindow(window);
 }
@@ -43,7 +48,7 @@ int main(int num_arguments, char **arguments) {
     logger::info("  -> height: {}", displayMode.h);
 
     SDL_Window *window = SDL_CreateWindow("GLFontRenderer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                          displayMode.w / 2, displayMode.h / 2, SDL_WINDOW_OPENGL);
+                                          1600, 900, SDL_WINDOW_OPENGL);
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE); //OpenGL core profile
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5); //OpenGL 5
@@ -78,7 +83,7 @@ int main(int num_arguments, char **arguments) {
     SDL_Event ev;
 
     gl_shader _test_shader;
-    auto *font = ttfloader::load_font("comfortaa-regular.ttf", 32);
+    auto *font = ttfloader::load_font("calibri.ttf", 128);
 
     while (running) {
         while (SDL_PollEvent(&ev)) {

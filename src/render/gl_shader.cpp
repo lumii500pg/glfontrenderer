@@ -21,7 +21,7 @@ static const char *_VERTEX_SOURCE = R"(#version 330
     void main() {
         vec2 v = (position / resolution) * 2.0 - 1.0;
         gl_Position = vec4(v.x, -v.y, 0.0, 1.);
-        texCoordFS = texCoord;
+        texCoordFS = vec2(texCoord.x, 1.0 - texCoord.y);
         colorFS = vec4(1.0);
         //colorFS = (vec4(float(((color >> 16) & 0xff)), float((color >> 8) & 0xff), float((color & 0xff)), float(((color >> 24) & 0xff))) / vec4(255.));
     })";

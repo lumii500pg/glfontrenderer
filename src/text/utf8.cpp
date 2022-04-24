@@ -4,25 +4,25 @@
 
 namespace glfr::utf8 {
     //Based on https://gist.github.com/rechardchen/3321830
-    size_t num_chars(const char *p) {
+    size_t num_chars(const char* p) {
         const auto ch = *p;
 
-        if ((ch & 0x80) == 0) {
+        if((ch & 0x80) == 0) {
             return 1;
         }
-        if ((ch & 0xe0) == 0xc0) {
+        if((ch & 0xe0) == 0xc0) {
             return 2;
         }
-        if ((ch & 0xf0) == 0xe0) {
+        if((ch & 0xf0) == 0xe0) {
             return 3;
         }
-        if ((ch & 0xf8) == 0xf0) {
+        if((ch & 0xf8) == 0xf0) {
             return 4;
         }
-        if ((ch & 0xfc) == 0xf8) {
+        if((ch & 0xfc) == 0xf8) {
             return 5;
         }
-        if ((ch & 0xfe) == 0xfc) {
+        if((ch & 0xfe) == 0xfc) {
             return 6;
         }
 
@@ -30,56 +30,58 @@ namespace glfr::utf8 {
     }
 
     size_t num_chars(uint64_t unicode) {
-        if (unicode >= 0 && unicode <= 0x7f) {
+        if(unicode >= 0 && unicode <= 0x7f) {
             return 1;
         }
-        if (unicode >= 0x80 && unicode <= 0x7ff) {
+        if(unicode >= 0x80 && unicode <= 0x7ff) {
             return 2;
         }
-        if (unicode >= 0x800 && unicode <= 0xffff) {
+        if(unicode >= 0x800 && unicode <= 0xffff) {
             return 3;
         }
-        if (unicode >= 0x10000 && unicode <= 0x1fffff) {
+        if(unicode >= 0x10000 && unicode <= 0x1fffff) {
             return 4;
         }
-        if (unicode >= 0x200000 && unicode <= 0x3ffffff) {
+        if(unicode >= 0x200000 && unicode <= 0x3ffffff) {
             return 5;
         }
-        if (unicode >= 0x4000000 && unicode <= 0x7fffffff) {
+        if(unicode >= 0x4000000 && unicode <= 0x7fffffff) {
             return 6;
         }
 
         throw std::runtime_error("Invalid unicode!");
     }
 
-    uint64_t to_unicode(const char *p, size_t &len) {
+    uint64_t to_unicode(const char* p, size_t& len) {
         len = num_chars(p);
+
         uint64_t unicode;
-        switch (len) {
+        switch(len) {
             case 1:
-                return static_cast<uint64_t>(*p);
+                unicode = static_cast<uint64_t>(*p);
+                break;
             case 2:
                 unicode = static_cast<uint64_t>(*p++ & 0x1f) << 6;
                 unicode |= static_cast<uint64_t>(*p & 0x3f);
-                return unicode;
+                break;
             case 3:
                 unicode = static_cast<uint64_t>(*p++ & 0xf) << 12;
                 unicode |= static_cast<uint64_t>(*p++ & 0x3f) << 6;
                 unicode |= static_cast<uint64_t>(*p & 0x3f);
-                return unicode;
+                break;
             case 4:
                 unicode = static_cast<uint64_t>(*p++ & 0x7) << 18;
                 unicode |= static_cast<uint64_t>(*p++ & 0x3f) << 12;
                 unicode |= static_cast<uint64_t>(*p++ & 0x3f) << 6;
                 unicode |= static_cast<uint64_t>(*p & 0x3f);
-                return unicode;
+                break;
             case 5:
                 unicode = static_cast<uint64_t>(*p++ & 0x3) << 24;
                 unicode |= static_cast<uint64_t>(*p++ & 0x3f) << 18;
                 unicode |= static_cast<uint64_t>(*p++ & 0x3f) << 12;
                 unicode |= static_cast<uint64_t>(*p++ & 0x3f) << 6;
                 unicode |= static_cast<uint64_t>(*p & 0x3f);
-                return unicode;
+                break;
             case 6:
                 unicode = static_cast<uint64_t>(*p++ & 0x1) << 30;
                 unicode |= static_cast<uint64_t>(*p++ & 0x3f) << 24;
@@ -87,15 +89,17 @@ namespace glfr::utf8 {
                 unicode |= static_cast<uint64_t>(*p++ & 0x3f) << 12;
                 unicode |= static_cast<uint64_t>(*p++ & 0x3f) << 6;
                 unicode |= static_cast<uint64_t>(*p & 0x3f);
-                return unicode;
+                break;
         }
-        return 0;
+
+        return unicode;
     }
 
-    void from_unicode(uint64_t unicode, char *buffer, size_t &len) {
+    void from_unicode(uint64_t unicode, char* buffer, size_t& len) {
         len = num_chars(unicode);
         buffer[len] = '\0';
-        switch (len) {
+
+        switch(len) {
             case 1:
                 buffer[0] = static_cast<char>(unicode);
                 break;
