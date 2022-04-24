@@ -12,7 +12,7 @@ namespace glfr {
     const uint32_t PADDING_X = 2;
     const uint32_t PADDING_Y = 2;
 
-    font* ttfloader::load_font(const char *name, size_t font_height) {
+    font *ttfloader::load_font(const char *name, size_t font_height) {
         std::vector<int8_t> readBytes = file_utils::read_bytes(std::string("fonts/") + name);
         return load_font(readBytes.data(), readBytes.size(), font_height);
     }
@@ -61,7 +61,7 @@ namespace glfr {
         }
     }
 
-    font* ttfloader::load_font(const void *ptr, size_t num_bytes, size_t font_height) {
+    font *ttfloader::load_font(const void *ptr, size_t num_bytes, size_t font_height) {
         uint64_t millis = current_time<std::chrono::milliseconds>();
         uint64_t nanos = current_time<std::chrono::nanoseconds>();
         uint32_t millisAll = current_time<std::chrono::milliseconds>();

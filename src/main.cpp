@@ -14,7 +14,7 @@
 // rgba
 const float CLEAR_COLOR[4] = {.0, .0, .0, .0};
 
-void update(SDL_Window *window, glfr::gl_shader& shader, glfr::gl_buffer& buffer, glfr::font& my_font) {
+void update(SDL_Window *window, glfr::gl_shader &shader, glfr::font &my_font) {
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(CLEAR_COLOR[0], CLEAR_COLOR[1], CLEAR_COLOR[2], CLEAR_COLOR[3]);
 
@@ -77,20 +77,8 @@ int main(int num_arguments, char **arguments) {
     bool running = true;
     SDL_Event ev;
 
-    const vertex vertices[] = {
-            { -1.0, 1.0, 0.0, 0.0, 1.0, 0xFFFF0000 },
-            { -1.0, -1.0, 0.0, 0.0, 0.0, 0xFF00FF00 },
-            { 1.0, -1.0, 0.0, 1.0, 0.0, 0xFF0000FF },
-            { 1.0, 1.0, 0.0, 1.0, 1.0, 0xFFFFFF00 }
-    };
-
-    uint32_t indices[] = {
-            0, 1, 3, 3, 1, 2
-    };
-
     gl_shader _test_shader;
-    gl_buffer _test_buffer(vertices, 4, indices, 6);
-    auto *font = ttfloader::load_font("calibri.ttf", 512);
+    auto *font = ttfloader::load_font("comfortaa-regular.ttf", 32);
 
     while (running) {
         while (SDL_PollEvent(&ev)) {

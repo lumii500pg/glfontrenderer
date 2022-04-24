@@ -32,11 +32,11 @@ namespace glfr {
             return iterator == _glyph_map.end() ? nullptr : &iterator->second;
         }
 
-        [[nodiscard]] inline gl_texture_2d& get_texture() noexcept {
+        [[nodiscard]] inline gl_texture_2d &get_texture() noexcept {
             return _texture;
         }
 
-        [[nodiscard]] inline const gl_texture_2d& get_texture() const noexcept {
+        [[nodiscard]] inline const gl_texture_2d &get_texture() const noexcept {
             return _texture;
         }
 

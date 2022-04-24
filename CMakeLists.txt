@@ -33,5 +33,5 @@ file(GLOB_RECURSE GLFONTRENDERER_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.c**)
 file(GLOB_RECURSE GLFONTRENDERER_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/*.h**)
 
 #add_library(GLFontRenderer SHARED ${GLFONTRENDERER_SOURCE_FILES} ${GLFONTRENDERER_HEADER_FILES})
-add_executable(GLFontRenderer ${GLFONTRENDERER_SOURCE_FILES} ${GLFONTRENDERER_HEADER_FILES} src/render/gl_buffer.cpp src/render/gl_buffer.h src/colorutils.h)
+add_executable(GLFontRenderer ${GLFONTRENDERER_SOURCE_FILES} ${GLFONTRENDERER_HEADER_FILES} src/render/font_mesh_builder.cpp src/render/font_mesh_builder.h src/text/utf8.cpp src/text/utf8.h src/text/utf8_iterator.h)
 target_link_libraries(GLFontRenderer ${GLFONTRENDERER_LIBRARIES})
