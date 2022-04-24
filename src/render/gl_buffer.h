@@ -5,7 +5,7 @@
 
 namespace glfr {
     struct vertex {
-        float x, y, z, u, v;
+        float x, y, u, v;
         uint32_t color;
     };
 

@@ -31,7 +31,7 @@ namespace glfr {
 
         [[nodiscard]] inline uint32_t& get(uint32_t x, uint32_t y) noexcept {
             auto* buffer = (uint32_t*) _surface->pixels;
-            return buffer[y * _width + x];
+            return buffer[(_height - y - 1) * _width + x];
         }
 
         [[nodiscard]] inline uint32_t get_width() const noexcept {

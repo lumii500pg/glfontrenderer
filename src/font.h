@@ -23,9 +23,14 @@ namespace glfr {
     class font final {
         gl_texture_2d _texture;
         std::unordered_map<uint64_t, glyph_info> _glyph_map;
-
+        float _font_height;
     public:
-        font(const bitmap& my_bitmap, std::unordered_map<uint64_t, glyph_info> glyph_map);
+        font(const bitmap &my_bitmap, std::unordered_map<uint64_t, glyph_info> glyph_map, float font_height);
+
+        [[nodiscard]] inline const glyph_info *get_glyph(uint64_t code) const {
+            const auto iterator = _glyph_map.find(code);
+            return iterator == _glyph_map.end() ? nullptr : &iterator->second;
+        }
 
         [[nodiscard]] inline gl_texture_2d& get_texture() noexcept {
             return _texture;
@@ -33,6 +38,10 @@ namespace glfr {
 
         [[nodiscard]] inline const gl_texture_2d& get_texture() const noexcept {
             return _texture;
+        }
+
+        [[nodiscard]] inline float get_height() const noexcept {
+            return _font_height;
         }
     };
 }

@@ -9,15 +9,18 @@ static const char *_VERTEX_SOURCE = R"(#version 330
     precision highp float;
     #endif
 
-    in vec3 position;
+    in vec2 position;
     in vec2 texCoord;
     in uint color;
 
     out vec2 texCoordFS;
     out vec4 colorFS;
 
+    uniform vec2 resolution;
+
     void main() {
-        gl_Position = vec4(position, 1.);
+        vec2 v = (position / resolution) * 2.0 - 1.0;
+        gl_Position = vec4(v.x, -v.y, 0.0, 1.);
         texCoordFS = texCoord;
         colorFS = vec4(1.0);
         //colorFS = (vec4(float(((color >> 16) & 0xff)), float((color >> 8) & 0xff), float((color & 0xff)), float(((color >> 24) & 0xff))) / vec4(255.));
@@ -96,6 +99,10 @@ namespace glfr {
     }
 
     gl_shader::~gl_shader() { glDeleteProgram(_id); }
+
+    void gl_shader::uniform_2f(const std::string_view& location, float x, float y) {
+        glUniform2f(glGetUniformLocation(_id, location.data()), x, y);
+    }
 
     [[maybe_unused]] void gl_shader::bind() noexcept {
         glUseProgram(_id);

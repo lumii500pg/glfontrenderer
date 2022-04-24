@@ -12,9 +12,9 @@ namespace glfr {
         glGenBuffers(1, &_vertex_buffer);
         glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
         glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(vertex), vertices, GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), nullptr);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (const void *) (3 * sizeof(float)));
-        glVertexAttribPointer(2, 1, GL_UNSIGNED_INT, GL_FALSE, sizeof(vertex), (const void *) (5 * sizeof(float)));
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), nullptr);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (const void *) (2 * sizeof(float)));
+        glVertexAttribPointer(2, 1, GL_UNSIGNED_INT, GL_FALSE, sizeof(vertex), (const void *) (4 * sizeof(float)));
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glBindVertexArray(0);

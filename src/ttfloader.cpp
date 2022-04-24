@@ -161,6 +161,8 @@ namespace glfr {
 
         uint32_t offset_x = 0, y_index = 0;
 
+        std::unordered_map<uint64_t, glyph_info> glyph_infos;
+
         for (unsigned long current_code: char_codes) {
             error = FT_Load_Char(face, current_code, FT_LOAD_DEFAULT);
             if (error) {
@@ -186,6 +188,13 @@ namespace glfr {
                 }
             }
 
+            glyph_infos.emplace(std::piecewise_construct, std::make_tuple(current_code), std::make_tuple(
+                    current_code, static_cast<float>(face->glyph->advance.x >> 6),
+                    static_cast<float>(face->glyph->advance.y >> 6),
+                    static_cast<float>(glyph_width), static_cast<float>(glyph_height),
+                    static_cast<float>(face->glyph->bitmap_left), static_cast<float>(face->glyph->bitmap_top), offset_x,
+                    offset_y));
+
             offset_x += glyph_width + PADDING_X;
             if (offset_x > preferred_width) {
                 offset_x = 0;
@@ -197,9 +206,7 @@ namespace glfr {
         logger::info("Total time: {}ms or {}ns", current_time<std::chrono::milliseconds>() - millisAll,
                      (current_time<std::chrono::nanoseconds>() - nanosAll) * 1000000.);
 
-        my_bitmap.save_to_file("test.bmp");
-
-        auto* my_font = new font(my_bitmap, {});
+        auto *my_font = new font(my_bitmap, glyph_infos, font_height);
         return my_font;
     }
 }

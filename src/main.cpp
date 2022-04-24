@@ -9,6 +9,7 @@
 
 #include "render/gl_shader.h"
 #include "render/gl_buffer.h"
+#include "render/font_mesh_builder.h"
 
 // rgba
 const float CLEAR_COLOR[4] = {.0, .0, .0, .0};
@@ -17,17 +18,10 @@ void update(SDL_Window *window, glfr::gl_shader& shader, glfr::gl_buffer& buffer
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(CLEAR_COLOR[0], CLEAR_COLOR[1], CLEAR_COLOR[2], CLEAR_COLOR[3]);
 
-    glEnable(GL_TEXTURE_2D);
-
-    shader.bind();
-    my_font.get_texture().bind(0);
-
-    buffer.draw();
-
-    my_font.get_texture().unbind(0);
-    shader.unbind();
-
-    glDisable(GL_TEXTURE_2D);
+    glfr::font_mesh_builder mb(my_font);
+    mb.begin();
+    mb.push(10.0f, 10.0f, "ICHBINIRGENDEINRANDOMTEXT", 0xFFFFFFFF);
+    mb.end(shader);
 
     SDL_GL_SwapWindow(window);
 }
@@ -102,7 +96,7 @@ int main(int num_arguments, char **arguments) {
         while (SDL_PollEvent(&ev)) {
             if (ev.type == SDL_QUIT) running = false;
         }
-        update(window, _test_shader, _test_buffer, *font);
+        update(window, _test_shader, *font);
     }
 
     delete font;

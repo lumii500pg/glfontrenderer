@@ -2,7 +2,7 @@
 #include "../bitmap.h"
 
 namespace glfr {
-    gl_texture_2d::gl_texture_2d(const bitmap& my_bitmap) {
+    gl_texture_2d::gl_texture_2d(const bitmap& my_bitmap) : _width(my_bitmap.get_width()), _height(my_bitmap.get_height()) {
         glGenTextures(1, &_id);
         glBindTexture(GL_TEXTURE_2D, _id);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, my_bitmap.get_width(), my_bitmap.get_height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, my_bitmap.get_data());
