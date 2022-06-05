@@ -6,6 +6,7 @@ namespace glfr {
         glGenTextures(1, &_id);
         glBindTexture(GL_TEXTURE_2D, _id);
 
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexImage2D(GL_TEXTURE_2D, 0,  GL_R8, my_bitmap.get_width(), my_bitmap.get_height(), 0, GL_RED, GL_UNSIGNED_BYTE, my_bitmap.get_data());
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
