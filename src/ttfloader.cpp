@@ -184,7 +184,7 @@ namespace glfr {
             for (auto y = 0; y < glyph_height; y++) {
                 for (auto x = 0; x < glyph_width; x++) {
                     const auto value = face->glyph->bitmap.buffer[y * glyph_width + x];
-                    my_bitmap.get(offset_x + x, offset_y + y) = (value << 24) | 0xFFFFFF;
+                    my_bitmap.get(offset_x + x, offset_y + y) = value;
                 }
             }
 
@@ -201,6 +201,9 @@ namespace glfr {
                 ++y_index;
             }
         }
+
+        my_bitmap.save_to_file("im_a_bitmap.bmp");
+
         logger::info("filled bitmap in {}ms or {}ns", current_time<std::chrono::milliseconds>() - millis,
                      (current_time<std::chrono::nanoseconds>() - nanos) * 1000000.);
         logger::info("Total time: {}ms or {}ns", current_time<std::chrono::milliseconds>() - millisAll,

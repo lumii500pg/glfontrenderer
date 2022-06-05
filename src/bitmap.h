@@ -8,30 +8,26 @@
 namespace glfr {
     class bitmap final {
     private:
-        SDL_Surface* _surface;
+        uint8_t* _pixels;
         uint32_t _width;
         uint32_t _height;
 
     public:
         bitmap(uint32_t width, uint32_t height)
                 : _width(width), _height(height) {
-            _surface = SDL_CreateRGBSurface(0, static_cast<int32_t>(width), static_cast<int32_t>(height), 32, 0xFF000000, 0xFF0000, 0xFF00, 0xFF);
-            if (!_surface) {
-                throw std::runtime_error(fmt::format("SDL_CreateRGBSurface failed: {}", SDL_GetError()));
-            }
+            _pixels = new uint8_t[width * height * 4];
         }
 
         ~bitmap() {
-            SDL_FreeSurface(_surface);
+            delete[] _pixels;
         }
 
         void save_to_file(const std::string_view& path) {
-            SDL_SaveBMP(_surface, path.data());
+            //TODO: SDL_SaveBMP(_surface, path.data());
         }
 
-        [[nodiscard]] inline uint32_t& get(uint32_t x, uint32_t y) noexcept {
-            auto* buffer = (uint32_t*) _surface->pixels;
-            return buffer[(_height - y - 1) * _width + x];
+        [[nodiscard]] inline uint8_t& get(uint32_t x, uint32_t y) noexcept {
+            return _pixels[(_height - y - 1) * _width + x];
         }
 
         [[nodiscard]] inline uint32_t get_width() const noexcept {
@@ -43,7 +39,7 @@ namespace glfr {
         }
 
         [[nodiscard]] inline const void* get_data() const noexcept {
-            return _surface->pixels;
+            return _pixels;
         }
     };
 }

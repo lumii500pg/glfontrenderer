@@ -23,7 +23,7 @@ void update(SDL_Window *window, glfr::gl_shader &shader, glfr::font &my_font) {
 
     glfr::font_mesh_builder mb(my_font);
     mb.begin();
-    mb.push(10.0f, 10.0f, "Ich\nbin\ncool", 0xFFFFFFFF);
+    mb.push(10.0f, 10.0f, "こんにちわ\nTest1234", 0xFFFFFFFF);
     mb.end(shader);
 
     glDisable(GL_BLEND);
@@ -83,7 +83,7 @@ int main(int num_arguments, char **arguments) {
     SDL_Event ev;
 
     gl_shader _test_shader;
-    auto *font = ttfloader::load_font("calibri.ttf", 128);
+    auto *font = ttfloader::load_font("yujiboku.ttf", 32);
 
     while (running) {
         while (SDL_PollEvent(&ev)) {
